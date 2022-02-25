@@ -26,14 +26,14 @@ function App() {
 
   useEffect(() => {
     dispatch(refreshToken());
-    var connectionOptions = {
-      "force new connection" : true,
-      "reconnect":true,
-      "reconnectionAttempts": "Infinity",
-      "timeout" : 10000,				
-      "transports" : ["websocket"]
-    };
-    const socket = io.connect('http://localhost:8080/',connectionOptions);
+    // var connectionOptions = {
+    //   "force new connection" : true,
+    //   "reconnect":true,
+    //   "reconnectionAttempts": "Infinity",
+    //   "timeout" : 10000,				
+    //   "transports" : ["websocket"]
+    // };
+    const socket = io.connect('http://localhost:8080/');
     // const socket = io();
     console.log("socket",socket);
     dispatch({type: GLOBALTYPES.SOCKET, payload: socket })
