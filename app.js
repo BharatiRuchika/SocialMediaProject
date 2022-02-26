@@ -1,4 +1,4 @@
-require('dotenv').config({ path: './config.env' })
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -6,27 +6,34 @@ const cookieParser = require('cookie-parser');
 const SocketServer = require('./socketServer');
 const corsOptions = {
   Credential: 'true',
-  
 };
-
-
 const app = express();
-
 app.use(express.json())
 app.options("*" , cors(corsOptions));
 app.use(cors(corsOptions));
 app.use(cookieParser())
+const {createServer}  = require("http");
+const {Server} = require("socket.io");
+const httpServer = createServer(app);
+// const srver = require('http').createServer(app)
+app.use(cors({
+  origin: "http://localhost:3000/",
+  credentials:true,
+  optionSuccessStatus:200
+}));
+const io = new Server(httpServer,{
+  cors: {
+    origin: 'http://localhost:3000/',
+    credentials:true,      
+    optionSuccessStatus:200
 
+  }}
+  );
+  const PORT = process.env.PORT||3000;
+  httpServer.listen(PORT, () => {
+    console.log("socket Is Running Port: " + PORT);
+   });
 
-//#region // !Socket
-const http = require('http').createServer(app);
-const io = require('socket.io')(http);
-
-
-const port = process.env.HTTP_PORT || 8080;
-http.listen(port, () => {
-  console.log("Listening on ", port);
-});
 io.on('connection', socket => {
   console.log("connection with socket is established");
     SocketServer(socket);
@@ -55,7 +62,7 @@ app.get('/', (req, res) => {
 // const URI = process.env.MONGODB_URL;
 const URI = process.env.DB_LOCAL_URI;
 console.log("url",`${process.env.DB_LOCAL_URI}`);
-console.log("port",process.env.PORT);
+
 mongoose.connect(URI, {
   
     useNewUrlParser:true,
@@ -65,5 +72,5 @@ mongoose.connect(URI, {
     console.log("Database Connected!!")
 })
 
-app.listen(`${process.env.PORT}`,()=>console.log(`server started at ${process.env.PORT} in ${process.env.NODE_ENV}`
-));
+// app.listen(`${process.env.PORT}`,()=>console.log(`server started at ${process.env.PORT} in ${process.env.NODE_ENV}`
+// ));
