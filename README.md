@@ -9,7 +9,7 @@
 
 <h3>Live demo</h3>
 
-https://connect-by-ishaan.netlify.app
+https://mysocialmediaproject.herokuapp.com/
 
 <h3>Back end source code</h3>
 
