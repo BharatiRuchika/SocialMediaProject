@@ -13,4 +13,4 @@ https://mysocialmediaproject.herokuapp.com/
 
 <h3>Back end source code</h3>
 
-https://github.com/ishaan1028/connect-api
+https://github.com/BharatiRuchika/SocialMediaProject
